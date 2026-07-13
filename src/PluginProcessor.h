@@ -5,6 +5,12 @@
 
 // M0 skeleton: a clean passthrough processor with input/output gain and
 // bypass. Band-split/compression/distortion DSP arrives in later milestones.
+//
+// As of M1 (issue #7), the APVTS layout declares the complete, ID-frozen
+// v1.0 parameter set (see src/params/ParameterIds.h and ParameterLayout.h),
+// but processBlock() below still only reads inputGain/outputGain/bypass -
+// every other parameter is declared-but-inert until its own milestone
+// (M2 dynamics, M3 distortion, M4 EQ/IR) wires it into the signal chain.
 class TwistYourGutsAudioProcessor final : public juce::AudioProcessor
 {
 public:
