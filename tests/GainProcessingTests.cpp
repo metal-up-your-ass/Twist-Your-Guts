@@ -55,8 +55,18 @@ TEST_CASE ("Gain math: +6dB input gain doubles the RMS level", "[gain][dsp]")
     CHECK (ratioInDecibels == Catch::Approx (6.0).margin (0.1));
 }
 
-TEST_CASE ("Passthrough null test: default parameters leave the signal unchanged", "[gain][dsp]")
+TEST_CASE ("Passthrough level test: default parameters leave the signal level unchanged", "[gain][dsp]")
 {
+    // Since #8/#10 wired the LR4 crossover permanently into the signal path
+    // (input trim -> split -> per-band level -> sum -> optional clip ->
+    // output trim), even at all-default/unity parameters the signal is no
+    // longer a bit-exact identity mapping: the low/high band sum is
+    // magnitude-flat (that is the whole point of using LR4) but carries the
+    // allpass-like phase response of the crossover, so individual samples of
+    // a steady-state tone are shifted relative to the input. This test
+    // therefore checks level transparency (RMS ratio ~= 0 dB) rather than
+    // sample-for-sample equality; the flat-sum property itself is asserted
+    // rigorously, across many probe frequencies, in CrossoverTests.cpp.
     TwistYourGutsAudioProcessor processor;
     processor.prepareToPlay (testSampleRate, testBlockSize);
 
@@ -71,14 +81,13 @@ TEST_CASE ("Passthrough null test: default parameters leave the signal unchanged
     juce::MidiBuffer midi;
     processor.processBlock (processed, midi);
 
-    for (int channel = 0; channel < reference.getNumChannels(); ++channel)
-    {
-        const auto* refData = reference.getReadPointer (channel);
-        const auto* outData = processed.getReadPointer (channel);
+    const auto inputRms = TestHelpers::rms (reference);
+    const auto outputRms = TestHelpers::rms (processed);
 
-        for (int sample = 0; sample < reference.getNumSamples(); ++sample)
-            CHECK (outData[sample] == Catch::Approx (refData[sample]).margin (1e-6));
-    }
+    REQUIRE (inputRms > 0.0);
+
+    const auto ratioInDecibels = juce::Decibels::gainToDecibels (outputRms / inputRms);
+    CHECK (ratioInDecibels == Catch::Approx (0.0).margin (0.1));
 }
 
 TEST_CASE ("Bypass parameter forces a bit-exact passthrough", "[gain][bypass]")
