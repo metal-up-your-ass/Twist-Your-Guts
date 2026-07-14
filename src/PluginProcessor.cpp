@@ -1,6 +1,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "params/ParameterIds.h"
+#include "params/ParameterLayout.h"
 
 namespace
 {
@@ -32,28 +33,7 @@ TwistYourGutsAudioProcessor::~TwistYourGutsAudioProcessor() = default;
 //==============================================================================
 juce::AudioProcessorValueTreeState::ParameterLayout TwistYourGutsAudioProcessor::createParameterLayout()
 {
-    juce::AudioProcessorValueTreeState::ParameterLayout layout;
-
-    layout.add (std::make_unique<juce::AudioParameterFloat> (
-        juce::ParameterID { ParamIDs::inputGain, 1 },
-        "Input Gain",
-        juce::NormalisableRange<float> (-24.0f, 24.0f, 0.01f),
-        0.0f,
-        juce::AudioParameterFloatAttributes().withLabel ("dB")));
-
-    layout.add (std::make_unique<juce::AudioParameterFloat> (
-        juce::ParameterID { ParamIDs::outputGain, 1 },
-        "Output Gain",
-        juce::NormalisableRange<float> (-24.0f, 24.0f, 0.01f),
-        0.0f,
-        juce::AudioParameterFloatAttributes().withLabel ("dB")));
-
-    layout.add (std::make_unique<juce::AudioParameterBool> (
-        juce::ParameterID { ParamIDs::bypass, 1 },
-        "Bypass",
-        false));
-
-    return layout;
+    return tyg::createParameterLayout();
 }
 
 //==============================================================================
