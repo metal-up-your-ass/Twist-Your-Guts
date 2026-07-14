@@ -9,12 +9,18 @@
 namespace TestHelpers
 {
     // Fills every channel of the buffer with a sine wave of the given
-    // frequency, starting phase at zero on each call (phase continuity
-    // across blocks is not needed for the RMS-based checks that use this).
+    // frequency. `startSampleIndex` offsets the phase as if this buffer were
+    // a continuation of a longer signal starting at absolute sample 0 - pass
+    // 0 (the default) for phase-at-zero-on-each-call behaviour (fine for
+    // memoryless gain-only passthrough checks), or the running sample count
+    // when feeding a filter/IIR-stateful processor block-by-block, where a
+    // phase discontinuity at every block boundary would inject spurious
+    // broadband energy into the filter and pollute level measurements.
     inline void fillWithSine (juce::AudioBuffer<float>& buffer,
                               double sampleRate,
                               double frequencyHz,
-                              float amplitude = 0.5f)
+                              float amplitude = 0.5f,
+                              juce::int64 startSampleIndex = 0)
     {
         const auto numChannels = buffer.getNumChannels();
         const auto numSamples = buffer.getNumSamples();
@@ -26,7 +32,7 @@ namespace TestHelpers
             for (int sample = 0; sample < numSamples; ++sample)
             {
                 const auto phase = juce::MathConstants<double>::twoPi * frequencyHz
-                                    * static_cast<double> (sample) / sampleRate;
+                                    * static_cast<double> (startSampleIndex + sample) / sampleRate;
                 data[sample] = amplitude * static_cast<float> (std::sin (phase));
             }
         }
