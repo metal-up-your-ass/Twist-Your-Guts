@@ -56,4 +56,4 @@ Set this before running `cmake -B build ...`. This is also how CI caches depende
 
 ## Build artefacts
 
-Built plugin formats (AU, VST3, Standalone) land under `build/TwistYourGuts_artefacts/`, in a `Release/` subdirectory for multi-config generators (e.g. the Windows Visual Studio generator) or directly under `TwistYourGuts_artefacts/` for single-config generators (e.g. Ninja), depending on generator and configuration.
+Built plugin formats (AU, VST3, Standalone) land under `build/Crypta_artefacts/`, in a `Release/` subdirectory for multi-config generators (e.g. the Windows Visual Studio generator) or directly under `Crypta_artefacts/` for single-config generators (e.g. Ninja), depending on generator and configuration.

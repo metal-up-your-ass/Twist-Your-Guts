@@ -1,17 +1,19 @@
-<p align="center"><img src="docs/assets/icon.png" alt="Twist Your Guts icon" width="160"/></p>
+<p align="center"><img src="docs/assets/icon.png" alt="Crypta icon" width="160"/></p>
 
-# Twist Your Guts
+# Crypta
 
 *Split your bass. Compress the lows. Twist the guts out of the highs.*
 
-[![CI](https://github.com/yves-vogl/twist-your-guts/actions/workflows/ci.yml/badge.svg)](https://github.com/yves-vogl/twist-your-guts/actions/workflows/ci.yml)
+> Formerly **Twist Your Guts**, renamed to Crypta as part of the suite's move to Basilica Audio naming (the crypt: the basilica's low-end foundation). If you have a v0.1.0-era session referencing the old plugin identity (`com.yvesvogl.twistyourguts`, plugin code `Tygt`), see the [Unreleased] entry in [`CHANGELOG.md`](CHANGELOG.md) — the new bundle ID and plugin code (`com.yvesvogl.crypta`, `Cryp`) mean DAWs treat this as a new plugin, so existing sessions will need to be re-pointed at the new plugin.
+
+[![CI](https://github.com/metal-up-your-ass/Crypta/actions/workflows/ci.yml/badge.svg)](https://github.com/metal-up-your-ass/Crypta/actions/workflows/ci.yml)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
-> **Work in progress.** Twist Your Guts is pre-1.0 and under active development (v0.1.0). There are no built binaries or releases yet — building from source is currently the only way to run it. Expect breaking changes until v1.0.0 ships (see [Roadmap](#roadmap)).
+> **Work in progress.** Crypta is pre-1.0 and under active development (v0.1.0). Expect breaking changes until v1.0.0 ships (see [Roadmap](#roadmap)).
 
 ## What it is
 
-Twist Your Guts is a Parallax-style bass plugin built on JUCE 8. It splits your bass signal into low and high bands with a linear-phase-adjacent Linkwitz-Riley crossover, compresses the low band in parallel, and runs the high band through a choice of three distortion voicings before summing everything back together through a 4-band EQ and an impulse-response (cab sim) loader. See [`docs/manual.md`](docs/manual.md) for the full parameter reference and usage tips.
+Crypta is a Parallax-style bass plugin built on JUCE 8. It splits your bass signal into low and high bands with a linear-phase-adjacent Linkwitz-Riley crossover, compresses the low band in parallel, and runs the high band through a choice of three distortion voicings before summing everything back together through a 4-band EQ and an impulse-response (cab sim) loader. See [`docs/manual.md`](docs/manual.md) for the full parameter reference and usage tips.
 
 ## Features
 
@@ -115,19 +117,19 @@ ctest --test-dir build --output-on-failure
 
 ## License
 
-Twist Your Guts is licensed under the [GNU Affero General Public License v3.0](LICENSE) (AGPLv3).
+Crypta is licensed under the [GNU Affero General Public License v3.0](LICENSE) (AGPLv3).
 
 This project uses [JUCE](https://juce.com) 8, whose open-source tier is licensed under AGPLv3 (as of JUCE 8; JUCE 7 and earlier used GPLv3), which is why this project is AGPLv3 rather than GPLv3. See [`docs/adr/0002-agplv3-licensing.md`](docs/adr/0002-agplv3-licensing.md) for the full reasoning.
 
 VST is a registered trademark of Steinberg Media Technologies GmbH.
 
-Twist Your Guts is an independent open-source project. It is not affiliated with, endorsed by, or sponsored by Neural DSP or the makers of any Parallax-branded product; any naming similarity refers only to the general "parallel bass processing" concept, not to any specific commercial product.
+Crypta is an independent open-source project. It is not affiliated with, endorsed by, or sponsored by Neural DSP or the makers of any Parallax-branded product; any naming similarity refers only to the general "parallel bass processing" concept, not to any specific commercial product.
 
 ## Releases & installation
 
 Tagged releases (`v*`) are built and published automatically by [`.github/workflows/release.yml`](.github/workflows/release.yml):
 
-- **macOS** — AU (`.component`) and VST3 (`.vst3`), Universal Binary (arm64 + x86_64), signed with a Developer ID Application certificate, notarized, and stapled. Installs and opens without a Gatekeeper warning.
-- **Windows** — VST3, **unsigned**. On first run, Windows SmartScreen may show a "Windows protected your PC" warning; choose **More info → Run anyway** to proceed. A signed Windows build is a documented future improvement, not yet available.
+- **macOS** — AU (`.component`), VST3 (`.vst3`), and Standalone, Universal Binary (arm64 + x86_64), signed with a Developer ID Application certificate (org-level secrets, shared across the Basilica Audio suite), notarized, and stapled. Installs and opens without a Gatekeeper warning.
+- **Windows** — VST3 and Standalone, **unsigned**. On first run, Windows SmartScreen may show a "Windows protected your PC" warning; choose **More info → Run anyway** to proceed. A signed Windows build is a documented future improvement, not yet available.
 
-See [`docs/releasing.md`](docs/releasing.md) for the full release runbook and [ADR 0006](docs/adr/0006-macos-signing-notarization.md) for the signing/notarization design rationale. This pipeline is dormant until the first `v*` tag is pushed with the required signing secrets configured — no releases have been published yet (see the work-in-progress notice above).
+See [`v0.1.0`](https://github.com/metal-up-your-ass/Crypta/releases/tag/v0.1.0) for the most recent published release (under the plugin's prior identity as Twist Your Guts); the next tagged release under the Crypta identity is planned as `v0.2.0`.
