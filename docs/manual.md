@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/icon.png" alt="Twist Your Guts icon" width="120"/></p>
+
 # Twist Your Guts — User Manual
 
 *Split your bass. Compress the lows. Twist the guts out of the highs.*
