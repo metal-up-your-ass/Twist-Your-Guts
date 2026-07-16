@@ -257,6 +257,35 @@ void CryptaAudioProcessor::releaseResources()
 {
 }
 
+//==============================================================================
+void CryptaAudioProcessor::reset()
+{
+    // Issue #56: clears every per-stage DSP class's own state (each already
+    // exposes its own real-time-safe reset() for exactly this purpose - see
+    // src/dsp/*.h) so a host transport stop/loop/rewind doesn't leave a
+    // decaying tail (crossover filter memory, gate/compressor envelopes,
+    // the high-band voicing's oversampling FIR/mid/tone filter state, the
+    // low-band latency-compensation delay line, EQ biquad history, or the
+    // IR convolution engine) ringing into whatever plays next. No
+    // allocation: every stage's reset() only clears already-allocated
+    // storage.
+    inputGainProcessor.reset();
+    outputGainProcessor.reset();
+
+    gate.reset();
+    crossover.reset();
+    lowCompressor.reset();
+    highVoicing.reset();
+
+    lowGainProcessor.reset();
+    highGainProcessor.reset();
+
+    eq.reset();
+    irLoader.reset();
+
+    lowBandLatencyDelay.reset();
+}
+
 bool CryptaAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
     const auto mono = juce::AudioChannelSet::mono();
