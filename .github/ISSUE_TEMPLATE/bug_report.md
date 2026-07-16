@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a problem with Twist Your Guts
+about: Report a problem with Crypta
 title: "[Bug] "
 labels: bug
 assignees: ''

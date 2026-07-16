@@ -1,18 +1,18 @@
-<p align="center"><img src="assets/icon.png" alt="Twist Your Guts icon" width="120"/></p>
+<p align="center"><img src="assets/icon.png" alt="Crypta icon" width="120"/></p>
 
-# Twist Your Guts — User Manual
+# Crypta — User Manual
 
 *Split your bass. Compress the lows. Twist the guts out of the highs.*
 
 ## What it is
 
-Twist Your Guts is a Parallax-style **parallel bass processor** built for metal production. It splits your bass signal into a low band and a high band with a 4th-order Linkwitz-Riley ("LR4") crossover, keeps the low band tight with a parallel compressor, and runs the high band through a choice of three distortion voicings before summing everything back together through a 4-band EQ and a cabinet-simulation IR loader.
+Crypta is a Parallax-style **parallel bass processor** built for metal production. It splits your bass signal into a low band and a high band with a 4th-order Linkwitz-Riley ("LR4") crossover, keeps the low band tight with a parallel compressor, and runs the high band through a choice of three distortion voicings before summing everything back together through a 4-band EQ and a cabinet-simulation IR loader.
 
 ### Where it sits in a symphonic-metal chain
 
-Twist Your Guts is designed to be the **bass-specific voicing stage** in the "Metal up your ass" suite:
+Crypta is designed to be the **bass-specific voicing stage** in the "Metal up your ass" suite:
 
-- Track order: **DI/amp sim → Twist Your Guts → bus compression/glue → mix bus**. It expects a reasonably clean, already-amp-sim'd or DI'd bass signal; it is not itself a full amp sim (no built-in preamp gain staging beyond the input trim and drive controls).
+- Track order: **DI/amp sim → Crypta → bus compression/glue → mix bus**. It expects a reasonably clean, already-amp-sim'd or DI'd bass signal; it is not itself a full amp sim (no built-in preamp gain staging beyond the input trim and drive controls).
 - The low band's parallel compressor is meant to keep the fundamental/sub content of the bass locked in place under a wall of distorted guitars, while the high band's voicing adds the upper-mid "grind" that lets the bass cut through a dense mix without competing for the same frequency range as the guitars.
 - The crossover point (default 250 Hz) is deliberately tunable across the whole low-mid register (60 Hz–1000 Hz) so you can match the split to the song's tuning (drop-tunings push useful low-end content further up).
 - The output stage's IR loader is meant for quick cabinet-style tone shaping without needing a separate cab-sim plugin later in the chain, though it can also be left off entirely if you're already running a dedicated cab sim elsewhere.

@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea or enhancement for Twist Your Guts
+about: Suggest an idea or enhancement for Crypta
 title: "[Feature] "
 labels: enhancement
 assignees: ''

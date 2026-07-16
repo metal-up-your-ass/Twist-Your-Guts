@@ -49,12 +49,12 @@ Dependency direction is one-way: `src/ui` → `src/params` ← `src/state`, and 
 
 ## Latency compensation
 
-The high band's voicing stage (`tyg::Voicing`) runs its nonlinear waveshaping oversampled 4x (`juce::dsp::Oversampling`, FIR half-band equiripple, max quality, integer latency), which introduces processing latency that the low band does not incur. This is the *only* source of latency in the current signal path - the gate, low-band parallel compressor, EQ, and IR loader (configured for zero-latency convolution) are all zero-latency by construction. To keep the two bands phase-coherent at the `Sum` stage:
+The high band's voicing stage (`cryp::Voicing`) runs its nonlinear waveshaping oversampled 4x (`juce::dsp::Oversampling`, FIR half-band equiripple, max quality, integer latency), which introduces processing latency that the low band does not incur. This is the *only* source of latency in the current signal path - the gate, low-band parallel compressor, EQ, and IR loader (configured for zero-latency convolution) are all zero-latency by construction. To keep the two bands phase-coherent at the `Sum` stage:
 
 - The low band path carries a matching `juce::dsp::DelayLine` (integer/no-interpolation, since the delay is always a whole number of samples) sized to the high band's oversampling latency.
 - The high band's own clean/distorted blend (`highBlend`) is handled by a `juce::dsp::DryWetMixer` whose dry path is *also* delay-compensated (`setWetLatency`) by that same amount, so the clean and distorted high-band signals stay phase-coherent with each other too, not just with the low band.
 
-`TwistYourGutsAudioProcessor::computeTotalLatencySamples()` reports `Voicing::getLatencySamples()` to the host via `setLatencySamples()`, so host-side plugin delay compensation (PDC) accounts for the whole chain. If the DSP later adds another latency source (e.g. a different oversampling factor becomes user-selectable), this seam is where it gets folded in.
+`CryptaAudioProcessor::computeTotalLatencySamples()` reports `Voicing::getLatencySamples()` to the host via `setLatencySamples()`, so host-side plugin delay compensation (PDC) accounts for the whole chain. If the DSP later adds another latency source (e.g. a different oversampling factor becomes user-selectable), this seam is where it gets folded in.
 
 ### The `DryWetMixer` priming gotcha (JUCE 8.0.14)
 
