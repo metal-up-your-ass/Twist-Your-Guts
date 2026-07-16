@@ -27,6 +27,15 @@ public:
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
 
+    // Issue #56: flushes every per-stage DSP class's own state (filter
+    // memory, envelope followers, oversampling FIR history, the low-band
+    // latency-compensation delay line, ...) without deallocating anything.
+    // Hosts call this on transport stop/loop/rewind - unlike
+    // prepareToPlay(), which only fires on sample-rate/block-size changes -
+    // so relying on prepareToPlay() alone leaves stale state ringing into
+    // whatever plays next.
+    void reset() override;
+
     bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
 
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;

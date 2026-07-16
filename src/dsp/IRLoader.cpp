@@ -35,6 +35,13 @@ namespace cryp
                                           juce::dsp::Convolution::Trim::no,
                                           juce::dsp::Convolution::Normalise::no);
 
+        // Issue #58: the single-sample identity IR has a negligible/zero
+        // tail by design (see the class-level comment above), so re-arm the
+        // reported tail length back to 0 whenever (re)prepared - matching
+        // the freshly-installed identity IR, not whatever was loaded before
+        // a sample-rate/block-size change.
+        loadedIrTailSeconds = 0.0;
+
         convolution.prepare (spec);
 
         // Prime the mix *before* prepare() so the mixer's internal reset()
@@ -58,6 +65,15 @@ namespace cryp
 
     void IRLoader::loadImpulseResponse (juce::AudioBuffer<float> irBuffer, double irSampleRate)
     {
+        // Issue #58: captured before the buffer is moved into Convolution
+        // below. A duration in seconds is invariant under Convolution's
+        // internal resampling to the session rate, so this is the IR's real
+        // tail length regardless of what sample rate the session itself
+        // runs at.
+        loadedIrTailSeconds = irSampleRate > 0.0
+                                  ? static_cast<double> (irBuffer.getNumSamples()) / irSampleRate
+                                  : 0.0;
+
         convolution.loadImpulseResponse (std::move (irBuffer),
                                           irSampleRate,
                                           juce::dsp::Convolution::Stereo::yes,

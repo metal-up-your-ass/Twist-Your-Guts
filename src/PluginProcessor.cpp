@@ -135,7 +135,13 @@ bool CryptaAudioProcessor::isMidiEffect() const
 
 double CryptaAudioProcessor::getTailLengthSeconds() const
 {
-    return 0.0;
+    // Issue #58: report the IR loader's actual loaded-IR duration instead of
+    // a hardcoded 0 - 0.0 while only the safe-by-default identity IR is
+    // installed (matching the previous, correct-for-that-state behaviour),
+    // but the real convolution tail length once loadImpulseResponse() has
+    // installed a real cab IR, so hosts trusting this value for bounce/
+    // freeze/render-tail decisions don't truncate it.
+    return irLoader.getTailLengthSeconds();
 }
 
 int CryptaAudioProcessor::getNumPrograms()
@@ -255,6 +261,35 @@ void CryptaAudioProcessor::updateLatencyCompensation()
 
 void CryptaAudioProcessor::releaseResources()
 {
+}
+
+//==============================================================================
+void CryptaAudioProcessor::reset()
+{
+    // Issue #56: clears every per-stage DSP class's own state (each already
+    // exposes its own real-time-safe reset() for exactly this purpose - see
+    // src/dsp/*.h) so a host transport stop/loop/rewind doesn't leave a
+    // decaying tail (crossover filter memory, gate/compressor envelopes,
+    // the high-band voicing's oversampling FIR/mid/tone filter state, the
+    // low-band latency-compensation delay line, EQ biquad history, or the
+    // IR convolution engine) ringing into whatever plays next. No
+    // allocation: every stage's reset() only clears already-allocated
+    // storage.
+    inputGainProcessor.reset();
+    outputGainProcessor.reset();
+
+    gate.reset();
+    crossover.reset();
+    lowCompressor.reset();
+    highVoicing.reset();
+
+    lowGainProcessor.reset();
+    highGainProcessor.reset();
+
+    eq.reset();
+    irLoader.reset();
+
+    lowBandLatencyDelay.reset();
 }
 
 bool CryptaAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const

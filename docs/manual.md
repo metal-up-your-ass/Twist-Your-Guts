@@ -8,7 +8,7 @@
 
 Crypta is a Parallax-style **parallel bass processor** built for metal production. It splits your bass signal into a low band and a high band with a 4th-order Linkwitz-Riley ("LR4") crossover, keeps the low band tight with a parallel compressor, and runs the high band through a choice of three distortion voicings before summing everything back together through a 4-band EQ and a cabinet-simulation IR loader.
 
-### Where it sits in a symphonic-metal chain
+### Where it sits in a heavy-music chain
 
 Crypta is designed to be the **bass-specific voicing stage** in the "Metal up your ass" suite:
 
