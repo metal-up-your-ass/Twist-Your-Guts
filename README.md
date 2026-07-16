@@ -9,7 +9,7 @@
 [![CI](https://github.com/metal-up-your-ass/Crypta/actions/workflows/ci.yml/badge.svg)](https://github.com/metal-up-your-ass/Crypta/actions/workflows/ci.yml)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
-> **Work in progress.** Crypta is pre-1.0 and under active development (v0.1.0). Expect breaking changes until v1.0.0 ships (see [Roadmap](#roadmap)).
+> **Work in progress.** Crypta is pre-1.0 and under active development (v0.1.0). Binaries for macOS and Windows are available from the [Releases](../../releases) page (macOS builds are signed & notarized); building from source works too. Expect breaking changes until v1.0.0 ships (see [Roadmap](#roadmap)).
 
 ## What it is
 
