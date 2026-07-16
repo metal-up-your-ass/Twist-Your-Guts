@@ -57,6 +57,18 @@ namespace cryp
         // resamples internally to match the session's sample rate.
         void loadImpulseResponse (juce::AudioBuffer<float> irBuffer, double irSampleRate);
 
+        // Issue #58: the currently-loaded IR's own duration in seconds
+        // (numSamples / irSampleRate at the time it was loaded - a duration
+        // is invariant under Convolution's internal resampling to the
+        // session rate, so this doesn't need to track the session sample
+        // rate separately). 0.0 while only the safe-by-default single-sample
+        // identity IR is installed (i.e. before any real IR has been
+        // loaded). CryptaAudioProcessor::getTailLengthSeconds() reports this
+        // to the host so bounce/freeze/render-tail decisions account for the
+        // actual convolution tail once a real cab IR is loaded, rather than
+        // a hardcoded 0.
+        double getTailLengthSeconds() const noexcept { return loadedIrTailSeconds; }
+
         // In-place: convolution + irMix dry/wet blend. Callers should skip
         // calling this entirely when irEnabled is off, for a guaranteed
         // bit-exact bypass rather than relying on mix==0.
@@ -73,5 +85,10 @@ namespace cryp
     private:
         juce::dsp::Convolution convolution;
         juce::dsp::DryWetMixer<float> mixer;
+
+        // See getTailLengthSeconds() above. 0.0 until a real IR is loaded
+        // (the identity IR installed by prepare() has a negligible/zero
+        // tail by design).
+        double loadedIrTailSeconds = 0.0;
     };
 }

@@ -135,7 +135,13 @@ bool CryptaAudioProcessor::isMidiEffect() const
 
 double CryptaAudioProcessor::getTailLengthSeconds() const
 {
-    return 0.0;
+    // Issue #58: report the IR loader's actual loaded-IR duration instead of
+    // a hardcoded 0 - 0.0 while only the safe-by-default identity IR is
+    // installed (matching the previous, correct-for-that-state behaviour),
+    // but the real convolution tail length once loadImpulseResponse() has
+    // installed a real cab IR, so hosts trusting this value for bounce/
+    // freeze/render-tail decisions don't truncate it.
+    return irLoader.getTailLengthSeconds();
 }
 
 int CryptaAudioProcessor::getNumPrograms()
