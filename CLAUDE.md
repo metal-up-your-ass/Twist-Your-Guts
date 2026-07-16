@@ -1,6 +1,6 @@
 # Crypta — parallel bass processor (bass)
 
-Per-repo working memory for Claude Code sessions on this plugin. Part of the **Metal up your ass** symphonic-metal plugin suite (`github.com/metal-up-your-ass`).
+Per-repo working memory for Claude Code sessions on this plugin. Part of the **Metal up your ass** heavy-music plugin suite (`github.com/metal-up-your-ass`).
 
 Formerly named **Twist Your Guts**; renamed to Crypta 2026-07-14 as part of the suite's move toward Basilica Audio naming (the crypt: the basilica's low-end foundation). New identity: `com.yvesvogl.crypta`, plugin code `Cryp` (old: `com.yvesvogl.twistyourguts`, `Tygt` — DAWs treat this as a new plugin).
 
